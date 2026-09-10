@@ -1,4 +1,4 @@
-import type { Anime, JikanResponse } from "../types/anime";
+import type { Anime, GenresResponse, JikanResponse } from "../types/anime";
 
 const BASE_URL = "https://api.jikan.moe/v4";
 
@@ -31,5 +31,11 @@ export async function getTopAnimes(page: number = 1): Promise<JikanResponse> {
 export async function searchAnimes(query: string, page: number = 1): Promise<JikanResponse> {
     const response = await fetchWithRetry(`${BASE_URL}/anime?q${encodeURIComponent(query)}&page=${page}`);
     const data: JikanResponse = await response.json();
+    return data;
+}
+
+export async function getGenres(): Promise<GenresResponse> {
+    const response = await fetchWithRetry(`${BASE_URL}/genres/anime`);
+    const data: GenresResponse = await response.json();
     return data;
 }
